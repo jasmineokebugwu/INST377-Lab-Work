@@ -13,7 +13,7 @@
 }
 
 .menu {
-    /*border: 1px solid #fff;  For debugging */
+    border: 1px solid #fff;  /*For debugging */
     width: 900px;
     display: flex;
     justify-content: space-between;
@@ -103,4 +103,10 @@
 
 .signup {
     margin-left: auto;
+}
+
+.title {
+    background-color: rgba(0,139, 139,0.8);
+    margin: 0;
+    padding: 10px 10px;
 }
