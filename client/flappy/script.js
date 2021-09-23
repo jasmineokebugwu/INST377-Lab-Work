@@ -14,6 +14,6 @@ document.addEventListener('DOMContentLoaded' ,  () => {
     }
 
     let timerId = setInterval(startGame(), 20)
-    
 
-});
+
+})
