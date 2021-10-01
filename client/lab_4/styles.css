@@ -98,8 +98,19 @@
     border-radius: 50px;
     border: 0;
     font-weight: bold;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
 }
  
+.carousel .carousel_actions button #carousel-button-prev {
+    margin-left: 20px;
+}
+
+.carousel .carousel_actions button #carousel-button-next {
+    margin-right: 20px;
+}
+
 .first-item {
      order: 1;
  }
