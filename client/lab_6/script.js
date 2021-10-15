@@ -1,45 +1,47 @@
-
 async function windowActions() {
-const endpoint = 'https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json';
+  const endpoint =
+    "https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json";
 
-const cities = [];
+  const request = await fetch(endpoint);
+  const restaurants = await request.json();
 
-const request = await fetch(endpoint)
-  .then((blob) => blob.json())
-  .then((data)) => cities.push(...data))
+  function findMatches(wordToMatch, restaurants) {
+    return restaurants.filter((place) => {
+      const regex = new RegExp(wordToMatch, "gi");
+      return place.city.match(regex) || place.name.match(regex);
+    });
+  }
+  /*
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3}+(?!\d)))/g, ",");
+  }
+ */
+  const searchInput = document.querySelector(".search");
+  const suggestions = document.querySelector(".suggestions");
 
-function findMatches(wordToMatch, cities) {
-    return cities.filter(place => {
-        const regex = new RegExp(wordToMatch, 'gi');
-        return place.city.match(regex) || VideoPlaybackQuality.state.match(regex)
-    })
-}
-
-function numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3}+(?!\d)))/g, ',');
-}
-
-function displayMatches() {
-    const matchArray = findMatches(this.value, cities);
-    const html = matchArray.map(place => {
-        const regex = new RegExp(this.value, 'gi');
-        const cityName = place.city.replace(regex, '<span class="h1">${this.value}</span>');
-        const stateName = place.state.replace(regex, '<span class="h1">${this.value}</span>');
+  function displayMatches(event) {
+    const matchArray = findMatches(event.target.value, restaurants);
+    const html = matchArray
+      .map((place) => {
+        const regex = new RegExp(event.target.value, "gi");
         return `
         <li>
-            <span class="name"> ${cityName}, ${stateName}</span>
-            <span class="population"> ${numberWithCommas(place.population)} </span>
+            <span class="city"> ${place.city} </span>
+            <span class="name"> ${place.name} </span>
+            <span class="address"> ${place.address} </span>
+            <span class="zip"> ${place.zip} </span>
+            <span class="category"> ${place.category} </span>
         </li>
         `;
-    }).join('');
+      })
+      .join("");
     suggestions.innerHTML = html;
+  }
+
+  searchInput.addEventListener("change", displayMatches);
+  searchInput.addEventListener("keyup", (evt) => {
+    displayMatches(evt);
+  });
 }
-
-const searchInput = document.querySelector('.search');
-const suggestions = document.querySelector('.suggestions');
-
-searchInput.addEventListener('change', displayMatches);
-searchInput.addEventListener('keyup', displayMatches);
 
 window.onload = windowActions;
-}
